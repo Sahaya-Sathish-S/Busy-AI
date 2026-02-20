@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #141e30);
+    background-size: 400% 400%;
+    animation: bgMove 12s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+@keyframes bgMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Butterflies */
+.butterfly {
+    position: absolute;
+    font-size: 20px;
+    opacity: 0.6;
+    animation: float 8s infinite ease-in-out;
+}
+
+.b1 { top: 10%; left: 10%; }
+.b2 { top: 40%; left: 85%; }
+.b3 { top: 80%; left: 20%; }
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0); }
+}
+
+/* Container */
+.container {
+    width: 95%;
+    max-width: 900px;
+    text-align: center;
+}
+
+/* Titles */
+.title {
+    font-size: 32px;
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    font-size: 14px;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+/* Info Card */
+.info-card {
+    background: rgba(255,255,255,0.08);
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.info-card h2 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+/* Products */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+/* Product Card */
+.product-card {
+    background: rgba(255,255,255,0.08);
+    padding: 20px;
+    border-radius: 16px;
+    text-align: left;
+    transition: 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-card h3 {
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.product-card p {
+    font-size: 13px;
+    margin-bottom: 12px;
+    opacity: 0.9;
+}
+
+.price {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* Button */
+button {
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    background: #00c6ff;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #00a3d9;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .title {
+        font-size: 26px;
+    }
+}

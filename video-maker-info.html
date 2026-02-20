@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Video Maker - Busy AI</title>
+    <link rel="stylesheet" href="video-maker-info.css">
+</head>
+<body>
+
+<!-- Butterflies -->
+<div class="butterfly b1">🦋</div>
+<div class="butterfly b2">🦋</div>
+<div class="butterfly b3">🦋</div>
+<div class="butterfly b4">🦋</div>
+<div class="butterfly b5">🦋</div>
+
+<div class="container">
+
+    <h1 class="title">🎥 AI Video Maker</h1>
+    <p class="subtitle">Turn your business details into an engaging video</p>
+
+    <!-- Form -->
+    <form class="form-card" id="videoForm">
+
+        <div class="input-group">
+            <label for="businessName">Business / Channel Name</label>
+            <input type="text" id="businessName" placeholder="Enter name" required>
+        </div>
+
+        <div class="input-group">
+            <label for="videoTitle">Video Title</label>
+            <input type="text" id="videoTitle" placeholder="Catchy video title" required>
+        </div>
+
+        <div class="input-group">
+            <label for="videoDescription">Video Description</label>
+            <textarea id="videoDescription" placeholder="Describe your video idea..." required></textarea>
+        </div>
+
+        <div class="input-group">
+            <label for="videoDuration">Video Duration</label>
+            <select id="videoDuration">
+                <option value="15">15 Seconds</option>
+                <option value="30">30 Seconds</option>
+                <option value="45">45 Seconds</option>
+                <option value="60">60 Seconds</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label for="videoFiles">Upload Images / Clips</label>
+            <input type="file" id="videoFiles" multiple accept="image/*,video/*">
+        </div>
+
+        <button type="submit" class="glow-btn">Next → Select Animation ✨</button>
+
+    </form>
+
+</div>
+
+<script>
+document.getElementById("videoForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    // Get values
+    const videoData = {
+        businessName: document.getElementById("businessName").value,
+        videoTitle: document.getElementById("videoTitle").value,
+        videoDescription: document.getElementById("videoDescription").value,
+        videoDuration: document.getElementById("videoDuration").value,
+        videoFiles: [] // We'll store file names temporarily
+    };
+
+    // Store uploaded files names (you can handle actual upload later)
+    const files = document.getElementById("videoFiles").files;
+    for(let i=0; i<files.length; i++){
+        videoData.videoFiles.push(files[i].name);
+    }
+
+    // Save to localStorage to pass data to next page
+    localStorage.setItem("videoData", JSON.stringify(videoData));
+
+    // Redirect to animation selection
+    window.location.href = "video-style.html";
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Operations - Busy AI</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Poppins,sans-serif;
+    background:#111;
+    color:white;
+    overflow-x:hidden;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:40px;
+}
+
+.title{
+    text-align:center;
+    font-size:32px;
+}
+
+.subtitle{
+    text-align:center;
+    opacity:0.7;
+    margin-bottom:40px;
+}
+
+.operations-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+}
+
+.op-card{
+    background:#1a1a1a;
+    padding:25px;
+    border-radius:20px;
+    text-align:center;
+    cursor:pointer;
+    transition:0.3s;
+    box-shadow:0 0 20px rgba(255,255,255,0.05);
+}
+
+.op-card:hover{
+    transform:translateY(-8px);
+    background:linear-gradient(135deg,#ff512f,#dd2476);
+}
+
+.icon{
+    font-size:35px;
+    margin-bottom:10px;
+}
+
+h3{
+    margin:10px 0;
+}
+
+p{
+    font-size:14px;
+    opacity:0.8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1 class="title">Operations</h1>
+<p class="subtitle">What Busy AI can do for you</p>
+
+<div class="operations-grid">
+
+<div class="op-card" onclick="openPage('photo-maker-info.html')">
+    <div class="icon">📸</div>
+    <h3>Photo Generation</h3>
+    <p>Create posters and images using AI</p>
+</div>
+
+<div class="op-card" onclick="openPage('video-maker-info.html')">
+    <div class="icon">🎥</div>
+    <h3>Video Creation</h3>
+    <p>Generate promotional videos automatically</p>
+</div>
+
+<div class="op-card" onclick="openPage('theme-selection.html')">
+    <div class="icon">🎨</div>
+    <h3>Theme Selection</h3>
+    <p>Choose modern and AI-designed themes</p>
+</div>
+
+<div class="op-card" onclick="openPage('analytics.html')">
+    <div class="icon">📊</div>
+    <h3>Business Analytics</h3>
+    <p>Get insights from your business data</p>
+</div>
+
+<div class="op-card" onclick="openPage('gallery.html')">
+    <div class="icon">🖼️</div>
+    <h3>Gallery</h3>
+    <p>View and manage generated photos & videos</p>
+</div>
+
+<div class="op-card" onclick="openPage('shopping.html')">
+    <div class="icon">🛒</div>
+    <h3>Shopping</h3>
+    <p>Purchase AI tools and services</p>
+</div>
+
+<div class="op-card" onclick="openPage('index.html')">
+    <div class="icon">💬</div>
+    <h3>AI Chat</h3>
+    <p>Interact with Busy AI for guidance</p>
+</div>
+
+<div class="op-card" onclick="openPage('login.html')">
+    <div class="icon">🔐</div>
+    <h3>User Accounts</h3>
+    <p>Secure login and signup system</p>
+</div>
+
+</div>
+
+</div>
+
+<script>
+function openPage(page){
+    window.location.href = page;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Busy AI Shopping</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#0f0f0f;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* Butterflies */
+.butterfly{
+    position:fixed;
+    font-size:20px;
+    animation:float 6s infinite ease-in-out;
+    opacity:0.6;
+}
+.b1{top:10%; left:10%;}
+.b2{top:40%; left:85%;}
+.b3{top:70%; left:20%;}
+
+@keyframes float{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-20px);}
+    100%{transform:translateY(0);}
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:40px 20px;
+}
+
+.title{
+    text-align:center;
+    font-size:32px;
+}
+
+.subtitle{
+    text-align:center;
+    opacity:0.7;
+    margin-bottom:40px;
+}
+
+.info-card{
+    background:#1a1a1a;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:40px;
+    box-shadow:0 0 20px rgba(255,191,0,0.1);
+}
+
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.product-card{
+    background:#1a1a1a;
+    padding:20px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 0 15px rgba(255,255,255,0.08);
+    transition:0.3s;
+}
+.product-card:hover{
+    transform:translateY(-5px);
+}
+
+.product-card img{
+    width:100%;
+    height:150px;
+    object-fit:cover;
+    border-radius:10px;
+    margin-bottom:15px;
+}
+
+.price{
+    display:block;
+    font-size:20px;
+    margin:10px 0;
+    color:#ffbf00;
+    font-weight:bold;
+}
+
+button{
+    padding:10px 22px;
+    border:none;
+    border-radius:20px;
+    background:#ffbf00;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button:hover{
+    background:#ffaa00;
+}
+
+/* QR Payment Modal */
+.modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.85);
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+}
+
+.modal-content{
+    background:#1a1a1a;
+    padding:25px;
+    border-radius:15px;
+    text-align:center;
+    width:320px;
+    box-shadow:0 0 30px rgba(255,191,0,0.3);
+}
+
+.modal-content img{
+    width:200px;
+    margin:15px 0;
+    border-radius:10px;
+}
+
+.success{
+    color:#00ff99;
+    margin-top:10px;
+    font-size:14px;
+}
+</style>
+</head>
+<body>
+
+<!-- Butterflies -->
+<div class="butterfly b1">🦋</div>
+<div class="butterfly b2">🦋</div>
+<div class="butterfly b3">🦋</div>
+
+<div class="container">
+
+    <h1 class="title">Busy AI Shopping</h1>
+    <p class="subtitle">Simple • Smart • AI Powered</p>
+
+    <!-- Owner Details -->
+    <div class="info-card">
+        <h2>Owner Details</h2>
+        <p><strong>Name:</strong> Sahaya Sathish S</p>
+        <p><strong>Email:</strong> sahayasathish60@gmail.com</p>
+        <p><strong>Phone:</strong> 9372344126</p>
+    </div>
+
+    <!-- Products -->
+    <div class="product-grid">
+
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0">
+            <h3>AI Poster Creation</h3>
+            <p>Create professional posters using AI</p>
+            <span class="price">₹299</span>
+            <button onclick="openQR('AI Poster Creation',299)">Buy Now</button>
+        </div>
+
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d">
+            <h3>AI Video Ads</h3>
+            <p>Generate short marketing videos easily</p>
+            <span class="price">₹499</span>
+            <button onclick="openQR('AI Video Ads',499)">Buy Now</button>
+        </div>
+
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71">
+            <h3>Business Analytics</h3>
+            <p>Get insights to grow your business</p>
+            <span class="price">₹199</span>
+            <button onclick="openQR('Business Analytics',199)">Buy Now</button>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- QR Payment Modal -->
+<div class="modal" id="qrModal">
+    <div class="modal-content">
+        <h3 id="qrProduct"></h3>
+        <p id="qrAmount"></p>
+
+        <!-- 🔴 PUT YOUR QR IMAGE HERE -->
+        <img src="qr.jpeg" alt="Scan to Pay">
+
+        <p>📱 Scan & pay using any UPI app</p>
+        <p class="success">After payment, we will contact you personally.</p>
+
+        <button onclick="closeQR()">Close</button>
+    </div>
+</div>
+
+<script>
+function openQR(product,amount){
+    document.getElementById("qrProduct").innerText = product;
+    document.getElementById("qrAmount").innerText = "Pay Amount: ₹" + amount;
+    document.getElementById("qrModal").style.display="flex";
+
+    // Save order info for your reference
+    localStorage.setItem("pendingOrder",JSON.stringify({
+        product:product,
+        amount:amount,
+        time:new Date().toLocaleString()
+    }));
+}
+
+function closeQR(){
+    document.getElementById("qrModal").style.display="none";
+}
+
+window.onclick = function(e){
+    if(e.target === document.getElementById("qrModal")){
+        closeQR();
+    }
+}
+</script>
+
+</body>
+</html>

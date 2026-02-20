@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Busy AI</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+<div class="butterfly b1">🦋</div>
+<div class="butterfly b2">🦋</div>
+<div class="butterfly b3">🦋</div>
+
+<div class="container">
+
+    <h1 class="title">Welcome Back</h1>
+    <p class="subtitle">Login to continue using Busy AI</p>
+
+    <div class="auth-card">
+
+        <div class="input-group">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="Enter your email">
+        </div>
+
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="Enter your password">
+        </div>
+
+        <button class="glow-btn" onclick="login()">Login</button>
+
+        <p class="switch">
+            Don’t have an account? 
+            <a href="signup.html">Sign up</a>
+        </p>
+
+    </div>
+
+</div>
+
+<script>
+function login() {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (!email || !password) {
+        alert("Please enter email and password");
+        return;
+    }
+
+    let users = JSON.parse(localStorage.getItem("busyai_users")) || [];
+
+    const validUser = users.find(user =>
+        user.email === email && user.password === password
+    );
+
+    if (validUser) {
+        localStorage.setItem("busyai_user", JSON.stringify(validUser));
+        alert("Login successful 🚀");
+        window.location.href = "index.html";
+    } else {
+        alert("Invalid email or password ❌");
+    }
+}
+</script>
+
+</body>
+</html>

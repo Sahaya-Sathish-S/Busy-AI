@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #141e30);
+    background-size: 400% 400%;
+    animation: bgMove 12s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+@keyframes bgMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Butterflies */
+.butterfly {
+    position: absolute;
+    font-size: 20px;
+    opacity: 0.6;
+    animation: float 8s infinite ease-in-out;
+}
+
+.b1 { top: 10%; left: 10%; }
+.b2 { top: 45%; left: 85%; }
+.b3 { top: 80%; left: 20%; }
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0); }
+}
+
+/* Container */
+.container {
+    width: 95%;
+    max-width: 1100px;
+    text-align: center;
+}
+
+/* Title */
+.title {
+    font-size: 32px;
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    font-size: 14px;
+    margin-bottom: 35px;
+    opacity: 0.9;
+}
+
+/* Grid */
+.operations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+/* Card */
+.op-card {
+    background: rgba(255,255,255,0.08);
+    padding: 22px;
+    border-radius: 18px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.op-card:hover {
+    transform: translateY(-6px);
+}
+
+/* Icon */
+.icon {
+    font-size: 34px;
+    margin-bottom: 12px;
+}
+
+/* Text */
+.op-card h3 {
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.op-card p {
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .title {
+        font-size: 26px;
+    }
+}

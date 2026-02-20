@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Business Analytics - Busy AI</title>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body{
+            margin:0;
+            font-family: Arial, sans-serif;
+            background:#0f0f0f;
+            color:white;
+        }
+
+        .container{
+            max-width:1000px;
+            margin:auto;
+            padding:40px 20px;
+        }
+
+        .title{
+            text-align:center;
+            font-size:32px;
+            margin-bottom:10px;
+        }
+
+        .subtitle{
+            text-align:center;
+            opacity:0.8;
+            margin-bottom:40px;
+        }
+
+        .charts{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:30px;
+        }
+
+        .card{
+            background:#1a1a1a;
+            padding:25px;
+            border-radius:15px;
+            box-shadow:0 0 20px rgba(255,255,255,0.08);
+        }
+
+        canvas{
+            max-width:100%;
+        }
+
+        .suggestion{
+            margin-top:40px;
+            background:#1a1a1a;
+            padding:25px;
+            border-radius:15px;
+            box-shadow:0 0 20px rgba(255,191,0,0.15);
+        }
+
+        .suggestion h2{
+            color:#ffbf00;
+            margin-bottom:15px;
+        }
+
+        .suggestion p{
+            line-height:1.6;
+            margin:8px 0;
+        }
+
+        .highlight{
+            color:#00ff99;
+            font-weight:bold;
+        }
+
+        @media(max-width:768px){
+            .charts{
+                grid-template-columns:1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1 class="title">📊 Business Analytics</h1>
+    <p class="subtitle">AI-Generated insights based on your business data</p>
+
+    <div class="charts">
+
+        <!-- Pie Chart -->
+        <div class="card">
+            <h3>Profit vs Expenses</h3>
+            <canvas id="pieChart"></canvas>
+        </div>
+
+        <!-- Bar Chart -->
+        <div class="card">
+            <h3>Business Metrics Overview</h3>
+            <canvas id="barChart"></canvas>
+        </div>
+
+    </div>
+
+    <!-- AI Suggestions -->
+    <div class="suggestion" id="aiSuggestion"></div>
+
+</div>
+
+<script>
+/* ===============================
+   LOAD USER DATA
+================================ */
+const data = JSON.parse(localStorage.getItem("businessAnalytics"));
+
+if(!data){
+    alert("No business data found!");
+    window.location.href = "business-info.html";
+}
+
+/* ===============================
+   CALCULATIONS
+================================ */
+const revenue = data.revenue;
+const expenses = data.expenses;
+const marketing = data.marketing;
+const visitors = data.visitors;
+const conversion = data.conversion;
+
+const profit = revenue - expenses;
+
+/* ===============================
+   PIE CHART (Profit vs Expense)
+================================ */
+new Chart(document.getElementById("pieChart"), {
+    type: "pie",
+    data: {
+        labels: ["Expenses", "Profit"],
+        datasets: [{
+            data: [expenses, profit > 0 ? profit : 0],
+            backgroundColor: ["#ff4d4d", "#00ff99"]
+        }]
+    },
+    options: {
+        plugins: {
+            legend: { labels: { color: "white" } }
+        }
+    }
+});
+
+/* ===============================
+   BAR CHART (Metrics)
+================================ */
+new Chart(document.getElementById("barChart"), {
+    type: "bar",
+    data: {
+        labels: ["Revenue", "Expenses", "Marketing", "Visitors"],
+        datasets: [{
+            label: "Business Metrics",
+            data: [revenue, expenses, marketing, visitors],
+            backgroundColor: ["#ffbf00", "#ff4d4d", "#00ffff", "#9b59b6"]
+        }]
+    },
+    options: {
+        scales: {
+            x: { ticks: { color: "white" } },
+            y: { ticks: { color: "white" } }
+        },
+        plugins: {
+            legend: { labels: { color: "white" } }
+        }
+    }
+});
+
+/* ===============================
+   AI SUGGESTIONS LOGIC
+================================ */
+let suggestionHTML = `<h2>🤖 AI Suggestions</h2>`;
+
+if(profit <= 0){
+    suggestionHTML += `<p>⚠️ Your expenses are higher than your revenue. Focus on <span class="highlight">cost reduction</span> or improving sales.</p>`;
+}else{
+    suggestionHTML += `<p>✅ Your business is profitable. Current profit is <span class="highlight">₹${profit}</span>.</p>`;
+}
+
+if(conversion < 5){
+    suggestionHTML += `<p>📉 Conversion rate is low. Improve website design, offers, and CTA to convert visitors into customers.</p>`;
+}else{
+    suggestionHTML += `<p>🚀 Good conversion rate. You are converting visitors efficiently.</p>`;
+}
+
+if(visitors < 1000){
+    suggestionHTML += `<p>📢 Low traffic detected. Invest in social media marketing, reels, and ads.</p>`;
+}else{
+    suggestionHTML += `<p>🔥 Strong traffic flow. Focus on retention and repeat customers.</p>`;
+}
+
+if(marketing > revenue * 0.5){
+    suggestionHTML += `<p>⚠️ Marketing spend is high compared to revenue. Optimize ad campaigns.</p>`;
+}
+
+suggestionHTML += `<p>📈 Overall AI Recommendation: Scale gradually, track metrics monthly, and automate marketing where possible.</p>`;
+
+document.getElementById("aiSuggestion").innerHTML = suggestionHTML;
+
+</script>
+
+</body>
+</html>

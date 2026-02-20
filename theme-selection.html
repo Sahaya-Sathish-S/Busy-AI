@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Select Poster Theme - Busy AI</title>
+
+<style>
+body {
+    font-family: Poppins, sans-serif;
+    background: #0b0f1a;
+    color: #fff;
+    text-align: center;
+    padding: 50px 20px;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+p {
+    opacity: 0.85;
+    margin-bottom: 40px;
+}
+
+/* Theme grid */
+.themes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+/* Theme card */
+.theme-card {
+    width: 220px;
+    height: 300px;
+    border-radius: 20px;
+    cursor: pointer;
+    position: relative;
+    border: 3px solid transparent;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+.theme-card:hover {
+    transform: scale(1.05);
+}
+
+.theme-card.selected {
+    border-color: #ffffff;
+    box-shadow: 0 0 35px rgba(255,255,255,0.7);
+}
+
+/* Theme name */
+.theme-name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 14px;
+    background: rgba(0,0,0,0.45);
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* COLOR THEMES */
+.theme-modern {
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+}
+
+.theme-purple {
+    background: linear-gradient(135deg,#1e0033,#3a0066,#5e0099);
+}
+
+.theme-neon {
+    background: linear-gradient(135deg,#000428,#004e92);
+}
+
+.theme-sunset {
+    background: linear-gradient(135deg,#ff512f,#dd2476);
+}
+
+.theme-emerald {
+    background: linear-gradient(135deg,#004d40,#00695c,#00796b);
+}
+</style>
+</head>
+
+<body>
+
+<h1>✨ Select Poster Theme</h1>
+<p>Choose a color style for your AI poster</p>
+
+<div class="themes">
+
+    <div class="theme-card theme-modern" data-theme="neon">
+        <div class="theme-name">Neon Blue</div>
+    </div>
+
+    <div class="theme-card theme-purple" data-theme="purple">
+        <div class="theme-name">Royal Purple</div>
+    </div>
+
+    <div class="theme-card theme-neon" data-theme="neon">
+        <div class="theme-name">Cyber Neon</div>
+    </div>
+
+    <div class="theme-card theme-sunset" data-theme="sunset">
+        <div class="theme-name">Sunset Orange</div>
+    </div>
+
+    <div class="theme-card theme-emerald" data-theme="emerald">
+        <div class="theme-name">Emerald Green</div>
+    </div>
+
+</div>
+
+<script>
+/* Ensure input exists */
+const posterData = JSON.parse(localStorage.getItem("posterData"));
+if (!posterData) {
+    window.location.href = "photo-maker-info.html";
+}
+
+const themeCards = document.querySelectorAll(".theme-card");
+
+themeCards.forEach(card => {
+    card.addEventListener("click", function () {
+
+        // remove old selection
+        themeCards.forEach(c => c.classList.remove("selected"));
+
+        // select this
+        this.classList.add("selected");
+
+        // save theme key
+        localStorage.setItem("selectedTheme", this.dataset.theme);
+
+        // slight delay for UX
+        setTimeout(() => {
+            window.location.href = "result.html";
+        }, 300);
+    });
+});
+</script>
+
+</body>
+</html>

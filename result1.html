@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Busy AI Reel</title>
+<style>
+body{
+    margin:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    height:100vh;
+    background:#000;
+    font-family:Poppins,sans-serif;
+    color:white;
+}
+canvas{
+    border-radius:25px;
+    box-shadow:0 0 40px rgba(255,255,255,0.2);
+}
+.buttons{
+    margin-top:20px;
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+button{
+    padding:12px 22px;
+    border:none;
+    border-radius:25px;
+    cursor:pointer;
+    font-weight:bold;
+}
+.download {background:#ff0080;color:white;}
+.gallery {background:#00c853;color:white;}
+.share {background:#2979ff;color:white;}
+.back {background:#444;color:white;}
+</style>
+</head>
+<body>
+
+<canvas id="canvas" width="360" height="640"></canvas>
+
+<div class="buttons">
+    <button class="download" onclick="downloadReel()">Download</button>
+    <button class="gallery" onclick="saveReel()">Save to Gallery</button>
+    <button class="share" onclick="shareReel()">Share</button>
+    <button class="back" onclick="goBack()">Back</button>
+</div>
+
+<script>
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
+const data=JSON.parse(localStorage.getItem("videoData"));
+
+if(!data){ alert("No video data found!"); window.location.href="video-maker-info.html"; }
+
+const slides=[
+    data.businessName || "Your Business",
+    data.videoTitle || "Your Title",
+    data.videoDescription || "Your Description",
+    "Follow Us Now!"
+];
+
+const durationSeconds=parseInt(data.videoDuration)||15;
+const totalSlides=slides.length;
+const slideTime=(durationSeconds*1000)/totalSlides;
+let index=0;
+
+function drawBackground(){
+    const grad=ctx.createLinearGradient(0,0,360,640);
+    grad.addColorStop(0,"#ff512f");
+    grad.addColorStop(1,"#dd2476");
+    ctx.fillStyle=grad;
+    ctx.fillRect(0,0,360,640);
+}
+
+function wrapText(text,x,y,maxWidth,lineHeight){
+    const words=text.split(" ");
+    let line="";
+    let yy=y;
+    for(let n=0;n<words.length;n++){
+        const testLine=line+words[n]+" ";
+        const width=ctx.measureText(testLine).width;
+        if(width>maxWidth && n>0){ ctx.fillText(line,x,yy); line=words[n]+" "; yy+=lineHeight; }
+        else line=testLine;
+    }
+    ctx.fillText(line,x,yy);
+}
+
+function drawSlide(text){
+    drawBackground();
+    ctx.fillStyle="#fff";
+    ctx.textAlign="center";
+    ctx.font="bold 28px Poppins";
+    wrapText(text,180,300,320,35);
+}
+
+setInterval(()=>{ drawSlide(slides[index]); index=(index+1)%slides.length; }, slideTime);
+drawSlide(slides[0]);
+
+function recordVideo(callback){
+    const stream=canvas.captureStream(30);
+    const recorder=new MediaRecorder(stream);
+    let chunks=[];
+    recorder.ondataavailable=e=>{ if(e.data.size>0) chunks.push(e.data); };
+    recorder.onstop=()=>{ const blob=new Blob(chunks,{type:"video/webm"}); callback(blob); };
+    recorder.start();
+    setTimeout(()=>recorder.stop(),durationSeconds*1000);
+}
+
+function downloadReel(){ recordVideo(blob=>{ const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="BusyAI_Reel.webm"; a.click(); }); }
+
+function saveReel(){
+    recordVideo(blob=>{
+        const reader=new FileReader();
+        reader.onload=function(){
+            const videoBase64=reader.result;
+            let gallery=JSON.parse(localStorage.getItem("gallery"))||[];
+            gallery.push({ image:videoBase64, title:data.videoTitle, date:new Date().toLocaleString() });
+            localStorage.setItem("gallery",JSON.stringify(gallery));
+            alert("Reel saved to gallery!");
+        };
+        reader.readAsDataURL(blob);
+    });
+}
+
+function shareReel(){
+    recordVideo(blob=>{
+        const file=new File([blob],"BusyAI_Reel.webm",{type:"video/webm"});
+        if(navigator.share){
+            navigator.share({ files:[file], title:data.videoTitle, text:"Created with Busy AI" });
+        } else alert("Sharing not supported on this device");
+    });
+}
+
+function goBack(){ window.location.href="video-maker-info.html"; }
+</script>
+
+</body>
+</html>

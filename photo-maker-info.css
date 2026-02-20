@@ -1,0 +1,138 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1c1c1c);
+    background-size: 400% 400%;
+    animation: gradientMove 12s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: white;
+}
+
+/* Animated Gradient */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Floating butterflies */
+.butterfly {
+    position: absolute;
+    font-size: 24px;
+    animation: float 10s infinite linear;
+    opacity: 0.7;
+}
+
+.b1 { top: 20%; left: 10%; animation-delay: 0s; }
+.b2 { top: 60%; left: 80%; animation-delay: 3s; }
+.b3 { top: 80%; left: 30%; animation-delay: 6s; }
+
+@keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-30px) rotate(20deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+/* Main container */
+.container {
+    text-align: center;
+    width: 90%;
+    max-width: 600px;
+}
+
+/* Title */
+.title {
+    font-size: 38px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px cyan;
+}
+
+.subtitle {
+    margin-bottom: 30px;
+    opacity: 0.8;
+}
+
+/* Glass Card */
+.form-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0,255,255,0.3);
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Input Groups */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    transition: 0.3s;
+}
+
+input:focus, textarea:focus {
+    box-shadow: 0 0 15px cyan;
+    background: rgba(255,255,255,0.15);
+}
+
+textarea {
+    resize: none;
+    height: 80px;
+}
+
+/* Glow Button */
+.glow-btn {
+    width: 100%;
+    padding: 15px;
+    border-radius: 30px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    background: linear-gradient(45deg, cyan, blue);
+    color: white;
+    transition: 0.4s;
+    box-shadow: 0 0 15px cyan;
+}
+
+.glow-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px cyan, 0 0 50px blue;
+}
+
+/* Responsive */
+@media(max-width: 500px){
+    .title {
+        font-size: 28px;
+    }
+}

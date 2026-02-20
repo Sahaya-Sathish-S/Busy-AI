@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Photo Maker - Busy AI</title>
+    <link rel="stylesheet" href="photo-maker-info.css">
+</head>
+<body>
+
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+
+    <!-- Floating Butterflies -->
+    <div class="butterfly b1">🦋</div>
+    <div class="butterfly b2">🦋</div>
+    <div class="butterfly b3">🦋</div>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <h1 class="title">📸 Photo Maker</h1>
+        <p class="subtitle">Create Stunning Business Posters Instantly</p>
+
+        <!-- FORM -->
+        <form class="form-card" id="photoForm">
+            <div class="input-group">
+                <label>Business Name</label>
+                <input type="text" id="business" required>
+            </div>
+
+            <div class="input-group">
+                <label>Services / Product</label>
+                <input type="text" id="service" required>
+            </div>
+
+            <div class="input-group">
+                <label>Offers</label>
+                <input type="text" id="offer">
+            </div>
+
+            <div class="input-group">
+                <label>Additional Details</label>
+                <textarea id="description"></textarea>
+            </div>
+
+            <button type="submit" class="glow-btn">Next → Select Theme</button>
+        </form>
+
+    </div>
+
+    <script>
+        document.getElementById("photoForm").addEventListener("submit", function(e){
+            e.preventDefault();
+
+            const posterData = {
+                business: document.getElementById("business").value,
+                service: document.getElementById("service").value,
+                offer: document.getElementById("offer").value,
+                description: document.getElementById("description").value
+            };
+
+            localStorage.setItem("posterData", JSON.stringify(posterData));
+
+            // Redirect to theme selection
+            window.location.href = "theme-selection.html";
+        });
+    </script>
+
+</body>
+</html>

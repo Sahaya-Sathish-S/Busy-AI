@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup - Busy AI</title>
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+
+<div class="butterfly b1">🦋</div>
+<div class="butterfly b2">🦋</div>
+<div class="butterfly b3">🦋</div>
+
+<div class="container">
+
+    <h1 class="title">Create Account</h1>
+    <p class="subtitle">Sign up to start creating with Busy AI</p>
+
+    <div class="auth-card">
+
+        <div class="input-group">
+            <label>Name</label>
+            <input type="text" id="name" placeholder="Enter your name">
+        </div>
+
+        <div class="input-group">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="Enter your email">
+        </div>
+
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="Create password">
+        </div>
+
+        <div class="input-group">
+            <label>Confirm Password</label>
+            <input type="password" id="confirmPassword" placeholder="Confirm password">
+        </div>
+
+        <button class="glow-btn" onclick="signup()">Sign Up</button>
+
+        <p class="switch">
+            Already have an account? 
+            <a href="login.html">Login</a>
+        </p>
+
+    </div>
+
+</div>
+
+<script>
+function signup() {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (!name || !email || !password || !confirmPassword) {
+        alert("Please fill all fields");
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        alert("Passwords do not match");
+        return;
+    }
+
+    let users = JSON.parse(localStorage.getItem("busyai_users")) || [];
+
+    const emailExists = users.some(user => user.email === email);
+    if (emailExists) {
+        alert("Email already registered!");
+        return;
+    }
+
+    const newUser = {
+        name: name,
+        email: email,
+        password: password
+    };
+
+    users.push(newUser);
+
+    localStorage.setItem("busyai_users", JSON.stringify(users));
+
+    alert("Signup successful! 🎉");
+    window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

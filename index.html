@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Busy AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Butterflies -->
+<div class="butterfly b1"></div>
+<div class="butterfly b2"></div>
+<div class="butterfly b3"></div>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h2 class="logo">Busy AI</h2>
+        <button class="side-btn" onclick="goTo('photo-maker-info.html')">📸 Photo Maker</button>
+        <button class="side-btn" onclick="goTo('video-maker-info.html')">🎥 Video Maker</button>
+        <button class="side-btn" onclick="goTo('business-info.html')">📊 Business</button>
+        <button class="side-btn" onclick="goTo('shopping.html')">🛒 Shop</button>
+    </aside>
+
+    <!-- Main Chat Area -->
+    <main class="chat-area">
+        <header class="chat-header">
+            <h1>Welcome to <span>Busy AI</span></h1>
+            <div class="icons">
+                <span onclick="goTo('gallery.html')">🖼️</span>
+                <span onclick="goTo('operations.html')">⚙️</span>
+                <span onclick="goTo('login.html')">👤</span>
+            </div>
+        </header>
+
+        <section class="chat-box" id="chatBox">
+            <div class="message bot">
+                👋 Hello, how can I help you today?
+            </div>
+        </section>
+
+
+        <footer class="chat-input">
+            <input type="text" placeholder="Enter message...">
+            <button class="send-btn">➤</button>
+        </footer>
+    </main>
+
+</div>
+<script src="script.js"></script>
+
+</body>
+</html>

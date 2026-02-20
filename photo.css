@@ -1,0 +1,171 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #141e30);
+    background-size: 400% 400%;
+    animation: bgMove 12s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+@keyframes bgMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Butterflies */
+.butterfly {
+    position: absolute;
+    font-size: 22px;
+    animation: float 10s infinite ease-in-out;
+}
+
+.b1 { top: 5%; left: 10%; }
+.b2 { top: 20%; left: 85%; }
+.b3 { top: 70%; left: 15%; }
+.b4 { top: 80%; left: 80%; }
+.b5 { top: 50%; left: 50%; }
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-25px); }
+    100% { transform: translateY(0); }
+}
+
+.container {
+    text-align: center;
+    width: 95%;
+    max-width: 1000px;
+}
+
+/* Title */
+.title {
+    font-size: 36px;
+    text-shadow: 0 0 20px cyan;
+}
+
+.subtitle {
+    margin-bottom: 30px;
+    opacity: 0.8;
+}
+
+/* Poster Card */
+.poster {
+    position: relative;
+    height: 450px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    box-shadow: 0 0 40px rgba(0,255,255,0.6);
+    transition: 0.5s;
+}
+
+.poster:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 70px cyan;
+}
+
+/* Overlay Glow */
+.poster-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent, rgba(0,0,0,0.6));
+}
+
+/* Poster Content */
+.poster-content {
+    position: relative;
+    z-index: 2;
+    padding: 40px;
+    text-align: left;
+}
+
+.business-name {
+    font-size: 40px;
+    font-weight: bold;
+    text-shadow: 0 0 15px white;
+}
+
+.tagline {
+    margin: 10px 0 25px;
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+.offer-box {
+    background: rgba(0,0,0,0.5);
+    padding: 20px;
+    border-radius: 15px;
+    display: inline-block;
+    box-shadow: 0 0 20px yellow;
+}
+
+.offer-box h3 {
+    color: yellow;
+    margin-bottom: 5px;
+}
+
+.contact-icons {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.contact-icons span {
+    background: rgba(255,255,255,0.1);
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+/* Buttons */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.glow-btn {
+    padding: 14px 35px;
+    border-radius: 30px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    background: linear-gradient(45deg, cyan, blue);
+    color: white;
+    box-shadow: 0 0 20px cyan;
+    transition: 0.4s;
+}
+
+.glow-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 50px cyan;
+}
+
+.outline-btn {
+    padding: 14px 35px;
+    border-radius: 30px;
+    border: 2px solid cyan;
+    background: transparent;
+    color: cyan;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.outline-btn:hover {
+    background: cyan;
+    color: black;
+}

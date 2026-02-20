@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Busy AI Poster</title>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<style>
+body {
+    margin:0;
+    font-family:Poppins, sans-serif;
+    background:#111;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:40px;
+    color:white;
+}
+#poster {
+    width:420px;
+    padding:40px 30px;
+    border-radius:25px;
+    text-align:center;
+    background:linear-gradient(135deg,#ff512f,#dd2476);
+    box-shadow:0 0 40px rgba(255,255,255,0.2);
+}
+h1 { font-size:32px; margin-bottom:25px; }
+.line { margin:20px 0; font-size:18px; line-height:1.5; }
+.buttons {
+    margin-top:30px;
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+button {
+    padding:12px 20px;
+    border:none;
+    border-radius:25px;
+    cursor:pointer;
+    font-weight:bold;
+}
+.download {background:#ff0080;color:white;}
+.gallery {background:#00c853;color:white;}
+.share {background:#2979ff;color:white;}
+.back {background:#444;color:white;}
+</style>
+</head>
+<body>
+
+<div id="poster">
+    <h1 id="business"></h1>
+    <div id="service" class="line"></div>
+    <div id="offer" class="line"></div>
+    <div id="description" class="line"></div>
+</div>
+
+<div class="buttons">
+    <button class="download" onclick="downloadPoster()">Download</button>
+    <button class="gallery" onclick="saveToGallery()">Save to Gallery</button>
+    <button class="share" onclick="sharePoster()">Share</button>
+    <button class="back" onclick="goBack()">Back</button>
+</div>
+
+<script>
+const data = JSON.parse(localStorage.getItem("posterData"));
+if(!data){
+    alert("No poster data found!");
+    window.location.href="photo-maker-info.html";
+}
+
+function setField(id,value){
+    const el=document.getElementById(id);
+    if(value && value.trim()!==""){
+        el.innerText=value;
+    } else {
+        el.style.display="none";
+    }
+}
+
+setField("business", data.business);
+setField("service", "✨ "+data.service);
+setField("offer", data.offer ? "🔥 Offer: "+data.offer : "");
+setField("description", data.description);
+
+function downloadPoster(){
+    html2canvas(document.getElementById("poster")).then(canvas=>{
+        const link=document.createElement("a");
+        link.download="BusyAI_Poster.png";
+        link.href=canvas.toDataURL();
+        link.click();
+    });
+}
+
+function saveToGallery(){
+    html2canvas(document.getElementById("poster")).then(canvas=>{
+        const img=canvas.toDataURL("image/png");
+        let gallery=JSON.parse(localStorage.getItem("gallery"))||[];
+        gallery.push({
+            image:img,
+            title:data.business,
+            date:new Date().toLocaleString()
+        });
+        localStorage.setItem("gallery",JSON.stringify(gallery));
+        alert("Poster saved to gallery!");
+    });
+}
+
+function sharePoster(){
+    html2canvas(document.getElementById("poster")).then(canvas=>{
+        canvas.toBlob(blob=>{
+            const file=new File([blob],"BusyAI_Poster.png",{type:"image/png"});
+            if(navigator.share){
+                navigator.share({
+                    files:[file],
+                    title:data.business,
+                    text:"Created with Busy AI"
+                });
+            } else {
+                alert("Sharing not supported on this device");
+            }
+        });
+    });
+}
+
+function goBack(){ window.location.href="photo-maker-info.html"; }
+</script>
+
+</body>
+</html>

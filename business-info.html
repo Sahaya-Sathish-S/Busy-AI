@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Business Analytics Input - Busy AI</title>
+    <link rel="stylesheet" href="business-info.css">
+</head>
+<body>
+
+<!-- Butterflies -->
+<div class="butterfly b1">🦋</div>
+<div class="butterfly b2">🦋</div>
+<div class="butterfly b3">🦋</div>
+<div class="butterfly b4">🦋</div>
+
+<div class="container">
+
+    <h1 class="title">📊 Business Analytics Setup</h1>
+    <p class="subtitle">Provide your business data and let AI generate insights</p>
+
+    <div class="form-card">
+        <form id="businessForm">
+
+            <div class="input-group">
+                <label>Total Revenue (₹)</label>
+                <input type="number" id="revenue" placeholder="Enter monthly revenue" required>
+            </div>
+
+            <div class="input-group">
+                <label>Total Visitors</label>
+                <input type="number" id="visitors" placeholder="Enter monthly visitors" required>
+            </div>
+
+            <div class="input-group">
+                <label>Total Expenses (₹)</label>
+                <input type="number" id="expenses" placeholder="Enter monthly expenses" required>
+            </div>
+
+            <div class="input-group">
+                <label>Marketing Spend (₹)</label>
+                <input type="number" id="marketing" placeholder="Enter marketing budget">
+            </div>
+
+            <div class="input-group">
+                <label>Conversion Rate (%)</label>
+                <input type="number" id="conversion" placeholder="Enter conversion rate">
+            </div>
+
+            <div class="input-group">
+                <label>Additional Notes</label>
+                <textarea id="notes" placeholder="Any additional business information"></textarea>
+            </div>
+
+            <div class="button-section">
+                <button type="submit" class="glow-btn">
+                    Generate AI Analytics 🚀
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+<script>
+document.getElementById("businessForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const analyticsData = {
+        revenue: Number(document.getElementById("revenue").value),
+        visitors: Number(document.getElementById("visitors").value),
+        expenses: Number(document.getElementById("expenses").value),
+        marketing: Number(document.getElementById("marketing").value) || 0,
+        conversion: Number(document.getElementById("conversion").value) || 0,
+        notes: document.getElementById("notes").value || ""
+    };
+
+    // Save analytics data
+    localStorage.setItem("businessAnalytics", JSON.stringify(analyticsData));
+
+    // Redirect to analytics dashboard
+    window.location.href = "analytics.html";
+});
+</script>
+
+</body>
+</html>
