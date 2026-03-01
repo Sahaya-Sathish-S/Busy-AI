@@ -1,60 +1,72 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Business Analytics Input - Busy AI</title>
+    <title>Business Setup - Busy AI</title>
     <link rel="stylesheet" href="business-info.css">
 </head>
 <body>
 
-<!-- Butterflies -->
-<div class="butterfly b1">🦋</div>
-<div class="butterfly b2">🦋</div>
-<div class="butterfly b3">🦋</div>
-<div class="butterfly b4">🦋</div>
-
 <div class="container">
 
-    <h1 class="title">📊 Business Analytics Setup</h1>
-    <p class="subtitle">Provide your business data and let AI generate insights</p>
+    <h1 class="title">📊 Tell Us About Your Business</h1>
+    <p class="subtitle">Answer simple questions to get AI insights</p>
 
     <div class="form-card">
         <form id="businessForm">
 
+            <!-- Business Type -->
             <div class="input-group">
-                <label>Total Revenue (₹)</label>
-                <input type="number" id="revenue" placeholder="Enter monthly revenue" required>
+                <label>What type of business do you run?</label>
+                <input type="text" id="businessType" placeholder="Example: Grocery shop, Boutique, Online store" required>
             </div>
 
+            <!-- Monthly Income -->
             <div class="input-group">
-                <label>Total Visitors</label>
-                <input type="number" id="visitors" placeholder="Enter monthly visitors" required>
+                <label>How much money did you earn last month? (₹)</label>
+                <input type="number" id="revenue" placeholder="Example: 50000" required>
             </div>
 
+            <!-- Monthly Expenses -->
             <div class="input-group">
-                <label>Total Expenses (₹)</label>
-                <input type="number" id="expenses" placeholder="Enter monthly expenses" required>
+                <label>How much did you spend last month? (₹)</label>
+                <input type="number" id="expenses" placeholder="Example: 30000" required>
             </div>
 
+            <!-- Customers -->
             <div class="input-group">
-                <label>Marketing Spend (₹)</label>
-                <input type="number" id="marketing" placeholder="Enter marketing budget">
+                <label>How many customers visited last month?</label>
+                <input type="number" id="customers" placeholder="Example: 400" required>
             </div>
 
+            <!-- Employees -->
             <div class="input-group">
-                <label>Conversion Rate (%)</label>
-                <input type="number" id="conversion" placeholder="Enter conversion rate">
+                <label>How many employees do you have?</label>
+                <input type="number" id="employees" placeholder="Example: 2">
             </div>
 
+            <!-- Biggest Problem -->
             <div class="input-group">
-                <label>Additional Notes</label>
-                <textarea id="notes" placeholder="Any additional business information"></textarea>
+                <label>What is your biggest business problem?</label>
+                <select id="problem">
+                    <option value="">Select one</option>
+                    <option value="low_sales">Low Sales</option>
+                    <option value="high_expenses">High Expenses</option>
+                    <option value="less_customers">Not Enough Customers</option>
+                    <option value="marketing">Marketing Issues</option>
+                    <option value="competition">Too Much Competition</option>
+                </select>
+            </div>
+
+            <!-- Goals -->
+            <div class="input-group">
+                <label>What is your goal for next month?</label>
+                <input type="text" id="goal" placeholder="Example: Increase sales, Get more customers">
             </div>
 
             <div class="button-section">
                 <button type="submit" class="glow-btn">
-                    Generate AI Analytics 🚀
+                    Generate My Business Report 🚀
                 </button>
             </div>
 
@@ -67,19 +79,24 @@
 document.getElementById("businessForm").addEventListener("submit", function(e){
     e.preventDefault();
 
+    const revenue = Number(document.getElementById("revenue").value);
+    const expenses = Number(document.getElementById("expenses").value);
+    const customers = Number(document.getElementById("customers").value);
+
     const analyticsData = {
-        revenue: Number(document.getElementById("revenue").value),
-        visitors: Number(document.getElementById("visitors").value),
-        expenses: Number(document.getElementById("expenses").value),
-        marketing: Number(document.getElementById("marketing").value) || 0,
-        conversion: Number(document.getElementById("conversion").value) || 0,
-        notes: document.getElementById("notes").value || ""
+        businessType: document.getElementById("businessType").value,
+        revenue: revenue,
+        expenses: expenses,
+        customers: customers,
+        employees: Number(document.getElementById("employees").value) || 0,
+        problem: document.getElementById("problem").value || "",
+        goal: document.getElementById("goal").value || "",
+        profit: revenue - expenses,
+        avgCustomerValue: customers > 0 ? (revenue / customers).toFixed(2) : 0
     };
 
-    // Save analytics data
     localStorage.setItem("businessAnalytics", JSON.stringify(analyticsData));
 
-    // Redirect to analytics dashboard
     window.location.href = "analytics.html";
 });
 </script>

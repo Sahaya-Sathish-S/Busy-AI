@@ -1,70 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Photo Maker - Busy AI</title>
-    <link rel="stylesheet" href="photo-maker-info.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo Maker - Busy AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:ital,wght@0,400;1,500&display=swap" rel="stylesheet">
+<style>
+/* ===== Reset ===== */
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+
+body {
+    min-height:100vh;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    display:flex; justify-content:center; align-items:flex-start;
+    padding:40px 20px;
+    color:white; overflow-y:auto;
+}
+
+/* ===== Container ===== */
+.container {
+    width:100%;
+    max-width:750px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(15px);
+    border-radius:25px;
+    padding:30px;
+    box-shadow: 0 0 50px rgba(0,255,213,0.5);
+    animation: glow 3s infinite alternate;
+}
+@keyframes glow {
+    0% { box-shadow:0 0 20px rgba(0,255,213,0.4); }
+    100% { box-shadow:0 0 60px rgba(0,255,213,0.7); }
+}
+
+h1.title {
+    text-align:center; color:#00ffd5; text-shadow:0 0 15px #00ffd5; margin-bottom:10px;
+    font-size:2.4rem;
+}
+p.subtitle {
+    text-align:center; margin-bottom:25px; font-weight:500; font-size:1rem; opacity:0.9;
+}
+
+/* ===== Form ===== */
+.form-card { display:flex; flex-direction:column; gap:20px; }
+
+/* ===== Glowing Input Boxes ===== */
+.input-group {
+    display:flex; flex-direction:column;
+    background: rgba(255,255,255,0.05);
+    padding:15px 20px; border-radius:20px;
+    border:1px solid rgba(0,255,213,0.3); transition:0.3s;
+}
+.input-group:hover { border-color:#00ffd5; box-shadow:0 0 20px rgba(0,255,213,0.5); }
+.input-group label { margin-bottom:6px; font-weight:600; color:#00ffd5; }
+.input-group input, .input-group textarea, .input-group select {
+    padding:12px; border-radius:12px; border:none; outline:none;
+    background: rgba(255,255,255,0.05); color:#fff; font-size:15px;
+}
+.input-group textarea { min-height:70px; resize:none; }
+
+/* Layout selector */
+.layout-select { display:flex; gap:15px; }
+.layout-select label { cursor:pointer; display:flex; align-items:center; gap:5px; }
+
+/* Submit Button */
+.glow-btn {
+    padding:15px; border-radius:25px; border:none;
+    background: linear-gradient(45deg, #00ffd5, #00aaff);
+    color:#000; font-weight:700; cursor:pointer;
+    box-shadow: 0 0 20px #00ffd5, 0 0 40px #00aaff;
+    transition:0.3s;
+}
+.glow-btn:hover { transform:scale(1.05); box-shadow:0 0 30px #00ffd5,0 0 60px #00aaff; }
+
+/* Optional group headers */
+.group-title {
+    font-size:1.1rem; font-weight:600; color:#ffdd57; margin-bottom:5px;
+}
+
+/* Add subtle gradient background to each box for extra effect */
+.input-group {
+    background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.1));
+}
+
+</style>
 </head>
 <body>
 
-    <!-- Animated Background -->
-    <div class="bg-animation"></div>
+<div class="container">
+    <h1 class="title">📸 Photo Maker</h1>
+    <p class="subtitle">Fill in the details to create a professional AI poster</p>
 
-    <!-- Floating Butterflies -->
-    <div class="butterfly b1">🦋</div>
-    <div class="butterfly b2">🦋</div>
-    <div class="butterfly b3">🦋</div>
+    <form class="form-card" id="photoForm">
 
-    <!-- Main Container -->
-    <div class="container">
+        <div class="input-group">
+            <label>Business Name</label>
+            <input type="text" id="business" required>
+        </div>
 
-        <h1 class="title">📸 Photo Maker</h1>
-        <p class="subtitle">Create Stunning Business Posters Instantly</p>
+        <div class="input-group">
+            <label>Services / Products</label>
+            <input type="text" id="service" required>
+        </div>
 
-        <!-- FORM -->
-        <form class="form-card" id="photoForm">
-            <div class="input-group">
-                <label>Business Name</label>
-                <input type="text" id="business" required>
+        <div class="input-group">
+            <label>Offer / Promotion</label>
+            <input type="text" id="offer">
+        </div>
+
+        <div class="input-group">
+            <label>Tagline / Slogan</label>
+            <input type="text" id="tagline" placeholder="Optional catchy slogan">
+        </div>
+
+        <div class="input-group">
+            <label>Poster Layout</label>
+            <div class="layout-select">
+                <label><input type="radio" name="layout" value="vertical" checked> Vertical</label>
+                <label><input type="radio" name="layout" value="horizontal"> Horizontal</label>
             </div>
+        </div>
 
-            <div class="input-group">
-                <label>Services / Product</label>
-                <input type="text" id="service" required>
-            </div>
+        <div class="input-group">
+            <label>Email Address</label>
+            <input type="email" id="email" placeholder="example@company.com">
+        </div>
 
-            <div class="input-group">
-                <label>Offers</label>
-                <input type="text" id="offer">
-            </div>
+        <div class="input-group">
+            <label>YouTube Channel Name</label>
+            <input type="text" id="youtube" placeholder="Optional YouTube channel">
+        </div>
 
-            <div class="input-group">
-                <label>Additional Details</label>
-                <textarea id="description"></textarea>
-            </div>
+        
 
-            <button type="submit" class="glow-btn">Next → Select Theme</button>
-        </form>
+        <div class="input-group">
+            <label>Business Address</label>
+            <textarea id="address" placeholder="Optional business address"></textarea>
+        </div>
 
-    </div>
+        <div class="input-group">
+            <label>Contact Info</label>
+            <input type="text" id="contact" placeholder="Phone / WhatsApp">
+        </div>
 
-    <script>
-        document.getElementById("photoForm").addEventListener("submit", function(e){
-            e.preventDefault();
+        <div class="input-group">
+            <label>Additional Details</label>
+            <textarea id="description" placeholder="Extra info for poster design"></textarea>
+        </div>
 
-            const posterData = {
-                business: document.getElementById("business").value,
-                service: document.getElementById("service").value,
-                offer: document.getElementById("offer").value,
-                description: document.getElementById("description").value
-            };
+        <button type="submit" class="glow-btn">Next → Select Theme</button>
+    </form>
+</div>
 
-            localStorage.setItem("posterData", JSON.stringify(posterData));
+<script>
+document.getElementById("photoForm").addEventListener("submit", function(e){
+    e.preventDefault();
 
-            // Redirect to theme selection
-            window.location.href = "theme-selection.html";
-        });
-    </script>
+    const posterData = {
+        business: document.getElementById("business").value,
+        service: document.getElementById("service").value,
+        offer: document.getElementById("offer").value,
+        tagline: document.getElementById("tagline").value,
+        layout: document.querySelector('input[name="layout"]:checked').value,
+        email: document.getElementById("email").value,
+        youtube: document.getElementById("youtube").value,
+        address: document.getElementById("address").value,
+        contact: document.getElementById("contact").value,
+        description: document.getElementById("description").value
+    };
+
+    localStorage.setItem("posterData", JSON.stringify(posterData));
+
+    window.location.href = "theme-selection.html";
+});
+</script>
 
 </body>
 </html>

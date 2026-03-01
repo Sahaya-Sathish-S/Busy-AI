@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Logo Studio - Busy AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* ================= RESET ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* ================= BACKGROUND ================= */
+body {
+    min-height: 100vh;
+    background: radial-gradient(circle at top left, #0b0f1a, #1a2233, #0b0f1a);
+    color: white;
+    overflow-x: hidden;
+}
+
+/* ================= MAIN CONTAINER ================= */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+/* ================= TITLE ================= */
+.title {
+    text-align: center;
+    font-size: 38px;
+    font-weight: 800;
+    color: #00ffe0;
+    text-shadow: 0 0 20px #00ffe0, 0 0 40px #00bfff;
+}
+
+.subtitle {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    opacity: 0.8;
+}
+
+/* ================= LAYOUT ================= */
+.layout {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+/* ================= FORM CARD ================= */
+.form-card {
+    flex: 1;
+    min-width: 320px;
+    background: rgba(10, 10, 20, 0.85);
+    backdrop-filter: blur(15px);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0,255,224,0.2);
+}
+
+/* ================= INPUT GROUP ================= */
+.input-group {
+    margin-bottom: 18px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background: rgba(0,255,224,0.05);
+    color: white;
+    box-shadow: 0 0 10px #00ffe0 inset, 0 0 20px #00bfff inset;
+    transition: 0.3s;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    box-shadow: 0 0 20px #00ffe0 inset, 0 0 40px #00bfff inset;
+}
+
+/* ================= BUTTON ================= */
+.glow-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 25px;
+    margin-top: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    background: linear-gradient(45deg, #00ffe0, #00bfff);
+    color: black;
+    box-shadow: 0 0 20px #00ffe0, 0 0 35px #00bfff;
+    transition: 0.3s;
+}
+
+.glow-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 35px #00ffe0, 0 0 50px #00bfff, 0 0 60px #00ffe0 inset;
+}
+
+/* ================= PREVIEW SECTION ================= */
+.preview-section {
+    flex: 1;
+    min-width: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+    max-width: 100%;
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:900px){
+    .layout{
+        flex-direction: column;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1 class="title">🎨 Create Your Professional Logo</h1>
+<p class="subtitle">AI Powered • Enterprise Quality • Busy AI</p>
+
+<div class="layout">
+
+<div class="form-card">
+
+<div class="input-group">
+<label>Company Name</label>
+<input type="text" id="name" placeholder="Enter Company Name">
+</div>
+
+<div class="input-group">
+<label>Tagline</label>
+<input type="text" id="tagline" placeholder="Enter Tagline">
+</div>
+
+<div class="input-group">
+<label>Category</label>
+<select id="category">
+<option>Business Company</option>
+<option>IT / Tech</option>
+<option>Hotel / Restaurant</option>
+<option>College / School</option>
+<option>Sports Team</option>
+<option>Healthcare</option>
+<option>Finance</option>
+<option>Gaming</option>
+<option>AI / Robotics</option>
+<option>Corporate Enterprise</option>
+</select>
+</div>
+
+<div class="input-group">
+<label>Primary Color</label>
+<input type="color" id="color1" value="#0072ff">
+</div>
+
+<div class="input-group">
+<label>Secondary Color</label>
+<input type="color" id="color2" value="#00c6ff">
+</div>
+
+<button class="glow-btn" onclick="generateLogo()">Generate Logo 🚀</button>
+<button class="glow-btn" onclick="downloadLogo()">Download PNG</button>
+
+</div>
+
+<div class="preview-section">
+<canvas id="logoCanvas" width="700" height="450"></canvas>
+</div>
+
+</div>
+</div>
+
+<script>
+function generateLogo() {
+
+    const canvas = document.getElementById('logoCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const name = document.getElementById('name').value || "Busy AI";
+    const tagline = document.getElementById('tagline').value || "Enterprise Solutions";
+    const color1 = document.getElementById('color1').value;
+    const color2 = document.getElementById('color2').value;
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    // Gradient background
+    let gradient = ctx.createLinearGradient(0,0,700,450);
+    gradient.addColorStop(0,color1);
+    gradient.addColorStop(1,color2);
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0,0,700,450);
+
+    // Decorative shapes
+    ctx.beginPath();
+    ctx.arc(120,100,60,0,Math.PI*2);
+    ctx.fillStyle="rgba(255,255,255,0.15)";
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(600,350,80,0,Math.PI*2);
+    ctx.fill();
+
+    // Text
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+
+    ctx.font = "bold 64px Poppins";
+    ctx.fillText(name,350,220);
+
+    ctx.font = "300 24px Poppins";
+    ctx.fillText(tagline,350,260);
+}
+
+function downloadLogo(){
+    const canvas = document.getElementById("logoCanvas");
+    const link = document.createElement('a');
+    link.download = 'busy-ai-logo.png';
+    link.href = canvas.toDataURL();
+    link.click();
+}
+</script>
+
+</body>
+</html>

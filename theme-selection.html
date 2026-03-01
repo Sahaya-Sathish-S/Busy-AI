@@ -2,144 +2,145 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Select Poster Theme - Busy AI</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theme Selection - Busy AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
 body {
-    font-family: Poppins, sans-serif;
-    background: #0b0f1a;
-    color: #fff;
-    text-align: center;
-    padding: 50px 20px;
-}
-
-h1 {
-    margin-bottom: 10px;
-}
-p {
-    opacity: 0.85;
-    margin-bottom: 40px;
-}
-
-/* Theme grid */
-.themes {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 25px;
-}
-
-/* Theme card */
-.theme-card {
-    width: 220px;
-    height: 300px;
-    border-radius: 20px;
-    cursor: pointer;
-    position: relative;
-    border: 3px solid transparent;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 25px rgba(0,0,0,0.5);
-    overflow: hidden;
-}
-
-.theme-card:hover {
-    transform: scale(1.05);
-}
-
-.theme-card.selected {
-    border-color: #ffffff;
-    box-shadow: 0 0 35px rgba(255,255,255,0.7);
-}
-
-/* Theme name */
-.theme-name {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 14px;
-    background: rgba(0,0,0,0.45);
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-/* COLOR THEMES */
-.theme-modern {
+    min-height:100vh;
     background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color: #fff;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    padding:50px 20px;
+    overflow-y:auto;
+}
+/* Animated background */
+.bg-animation {
+    position:fixed; top:0; left:0;
+    width:100%; height:100%;
+    background: radial-gradient(circle at 50% 50%, rgba(0,255,213,0.1), transparent 70%);
+    animation: rotateBG 30s linear infinite;
+    z-index:-2;
+}
+@keyframes rotateBG { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
+
+/* Butterflies */
+.butterfly { position:absolute; font-size:25px; animation: fly 12s linear infinite; opacity:0.8; }
+.b1 { top:70%; left:10%; animation-delay:0s; }
+.b2 { top:50%; left:70%; animation-delay:4s; }
+.b3 { top:30%; left:40%; animation-delay:8s; }
+@keyframes fly {
+    0% { transform:translate(0,0) rotate(0deg); }
+    25% { transform:translate(80px,-50px) rotate(45deg); }
+    50% { transform:translate(-50px,100px) rotate(90deg); }
+    75% { transform:translate(150px,50px) rotate(135deg); }
+    100% { transform:translate(0,0) rotate(180deg); }
 }
 
-.theme-purple {
-    background: linear-gradient(135deg,#1e0033,#3a0066,#5e0099);
+/* Container */
+.container {
+    max-width:1100px;
+    width:100%;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(20px);
+    padding:40px;
+    border-radius:25px;
+    box-shadow:0 0 50px rgba(0,255,213,0.5);
+    text-align:center;
+    animation: glow 3s infinite alternate;
 }
+@keyframes glow { 0%{box-shadow:0 0 20px rgba(0,255,213,0.4);} 100%{box-shadow:0 0 60px rgba(0,255,213,0.7);} }
 
-.theme-neon {
-    background: linear-gradient(135deg,#000428,#004e92);
-}
+h1 { font-size:2.5rem; color:#00ffd5; text-shadow:0 0 15px #00ffd5; margin-bottom:10px; }
+p.subtitle { opacity:0.85; font-size:1.1rem; margin-bottom:40px; }
 
-.theme-sunset {
-    background: linear-gradient(135deg,#ff512f,#dd2476);
-}
+/* Theme Grid */
+.themes { display:flex; flex-wrap:wrap; justify-content:center; gap:25px; }
 
-.theme-emerald {
-    background: linear-gradient(135deg,#004d40,#00695c,#00796b);
+/* Theme Cards */
+.theme-card {
+    width:200px; height:300px; border-radius:25px; cursor:pointer; position:relative;
+    border:3px solid transparent; transition: all 0.3s ease; overflow:hidden;
+    box-shadow:0 0 30px rgba(0,0,0,0.5); display:flex; flex-direction:column; justify-content:flex-end; color:#fff;
+    background-size:cover; background-position:center;
 }
+.theme-card:hover { transform:scale(1.05); }
+.theme-card.selected { border-color:#00ffd5; box-shadow:0 0 50px rgba(0,255,213,0.9); }
+.theme-name { padding:12px; background: rgba(0,0,0,0.5); font-weight:600; letter-spacing:1px; font-size:1rem; }
+.theme-card::before {
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(45deg, rgba(0,255,213,0.2), rgba(0,170,255,0.2));
+    opacity:0; transition:opacity 0.4s; z-index:1;
+}
+.theme-card:hover::before { opacity:1; }
+
+/* 15 Themes */
+.theme1 { background:linear-gradient(135deg,#0f2027,#203a43,#2c5364); }
+.theme2 { background:linear-gradient(135deg,#1e0033,#3a0066,#5e0099); }
+.theme3 { background:linear-gradient(135deg,#000428,#004e92); }
+.theme4 { background:linear-gradient(135deg,#ff512f,#dd2476); }
+.theme5 { background:linear-gradient(135deg,#004d40,#00695c,#00796b); }
+.theme6 { background:linear-gradient(135deg,#ff7e5f,#feb47b); }
+.theme7 { background:linear-gradient(135deg,#00c6ff,#0072ff); }
+.theme8 { background:linear-gradient(135deg,#fc5c7d,#6a82fb); }
+.theme9 { background:linear-gradient(135deg,#11998e,#38ef7d); }
+.theme10 { background:linear-gradient(135deg,#f7971e,#ffd200); }
+.theme11 { background:linear-gradient(135deg,#ee9ca7,#ffdde1); }
+.theme12 { background:linear-gradient(135deg,#00f260,#0575e6); }
+.theme13 { background:linear-gradient(135deg,#8e2de2,#4a00e0); }
+.theme14 { background:linear-gradient(135deg,#ff6a00,#ee0979); }
+.theme15 { background:linear-gradient(135deg,#43cea2,#185a9d); }
 </style>
 </head>
-
 <body>
 
-<h1>✨ Select Poster Theme</h1>
-<p>Choose a color style for your AI poster</p>
+<div class="bg-animation"></div>
+<div class="butterfly b1">🦋</div>
+<div class="butterfly b2">🦋</div>
+<div class="butterfly b3">🦋</div>
 
-<div class="themes">
+<div class="container">
+    <h1>✨ Select Poster Theme</h1>
+    <p class="subtitle">Choose a professional style for your AI poster</p>
 
-    <div class="theme-card theme-modern" data-theme="neon">
-        <div class="theme-name">Neon Blue</div>
+    <div class="themes">
+        <div class="theme-card theme1" data-theme="theme1"><div class="theme-name">Modern Dark</div></div>
+        <div class="theme-card theme2" data-theme="theme2"><div class="theme-name">Royal Purple</div></div>
+        <div class="theme-card theme3" data-theme="theme3"><div class="theme-name">Cyber Neon</div></div>
+        <div class="theme-card theme4" data-theme="theme4"><div class="theme-name">Sunset Orange</div></div>
+        <div class="theme-card theme5" data-theme="theme5"><div class="theme-name">Emerald Green</div></div>
+        <div class="theme-card theme6" data-theme="theme6"><div class="theme-name">Peach Glow</div></div>
+        <div class="theme-card theme7" data-theme="theme7"><div class="theme-name">Ocean Blue</div></div>
+        <div class="theme-card theme8" data-theme="theme8"><div class="theme-name">Twilight Pink</div></div>
+        <div class="theme-card theme9" data-theme="theme9"><div class="theme-name">Jungle Green</div></div>
+        <div class="theme-card theme10" data-theme="theme10"><div class="theme-name">Golden Sun</div></div>
+        <div class="theme-card theme11" data-theme="theme11"><div class="theme-name">Rose Mist</div></div>
+        <div class="theme-card theme12" data-theme="theme12"><div class="theme-name">Aqua Flow</div></div>
+        <div class="theme-card theme13" data-theme="theme13"><div class="theme-name">Royal Violet</div></div>
+        <div class="theme-card theme14" data-theme="theme14"><div class="theme-name">Flamingo Pink</div></div>
+        <div class="theme-card theme15" data-theme="theme15"><div class="theme-name">Blue Lagoon</div></div>
     </div>
-
-    <div class="theme-card theme-purple" data-theme="purple">
-        <div class="theme-name">Royal Purple</div>
-    </div>
-
-    <div class="theme-card theme-neon" data-theme="neon">
-        <div class="theme-name">Cyber Neon</div>
-    </div>
-
-    <div class="theme-card theme-sunset" data-theme="sunset">
-        <div class="theme-name">Sunset Orange</div>
-    </div>
-
-    <div class="theme-card theme-emerald" data-theme="emerald">
-        <div class="theme-name">Emerald Green</div>
-    </div>
-
 </div>
 
 <script>
-/* Ensure input exists */
-const posterData = JSON.parse(localStorage.getItem("posterData"));
-if (!posterData) {
-    window.location.href = "photo-maker-info.html";
+// Fetch poster data
+const posterData = JSON.parse(localStorage.getItem("posterData") || "{}");
+if(!posterData.business || !posterData.service){
+    window.location.href="photo-maker-info.html";
 }
 
+// Theme selection
 const themeCards = document.querySelectorAll(".theme-card");
-
-themeCards.forEach(card => {
-    card.addEventListener("click", function () {
-
-        // remove old selection
-        themeCards.forEach(c => c.classList.remove("selected"));
-
-        // select this
+themeCards.forEach(card=>{
+    card.addEventListener("click", function(){
+        themeCards.forEach(c=>c.classList.remove("selected"));
         this.classList.add("selected");
-
-        // save theme key
         localStorage.setItem("selectedTheme", this.dataset.theme);
 
-        // slight delay for UX
-        setTimeout(() => {
-            window.location.href = "result.html";
-        }, 300);
+        setTimeout(()=>{ window.location.href="result.html"; }, 300);
     });
 });
 </script>

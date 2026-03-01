@@ -1,132 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Busy AI - Video Style</title>
-    <link rel="stylesheet" href="video-style.css">
-    <style>
-        /* Highlight selected style */
-        .style-card.selected {
-            border: 3px solid #ffbf00;
-            box-shadow: 0 0 20px #ffbf00;
-        }
-        .style-card img {
-            width: 100%;
-            border-radius: 10px;
-        }
-        .style-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .style-card {
-            text-align: center;
-            padding: 10px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: 0.3s all;
-            border: 2px solid transparent;
-        }
-        .style-card h3 {
-            margin: 10px 0;
-        }
-        .generate-btn {
-            margin-top: 30px;
-            padding: 12px 30px;
-            font-size: 16px;
-            cursor: pointer;
-            background: #ffbf00;
-            border: none;
-            border-radius: 8px;
-            color: #000;
-            font-weight: bold;
-        }
-        .generate-btn:hover {
-            background: #ffaa00;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Busy AI - Video Style</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:ital,wght@0,400;1,500&display=swap" rel="stylesheet">
+<style>
+/* ===== Reset ===== */
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+body {
+    min-height:100vh;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    display:flex; justify-content:center; align-items:flex-start;
+    padding:40px 20px;
+    color:white; overflow-y:auto;
+}
+
+/* ===== Container ===== */
+.container {
+    width:100%;
+    max-width:900px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(15px);
+    border-radius:25px;
+    padding:30px 40px;
+    box-shadow: 0 0 50px rgba(0,255,213,0.5);
+    animation: glow 3s infinite alternate;
+}
+@keyframes glow {
+    0% { box-shadow:0 0 20px rgba(0,255,213,0.4); }
+    100% { box-shadow:0 0 60px rgba(0,255,213,0.7); }
+}
+
+h1.title {
+    text-align:center; color:#00ffd5; text-shadow:0 0 15px #00ffd5; margin-bottom:10px;
+    font-size:2.5rem;
+}
+p.subtitle {
+    text-align:center; margin-bottom:30px; font-weight:500; font-size:1.1rem; opacity:0.9;
+}
+
+/* ===== Style Cards Grid ===== */
+.style-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap:25px;
+}
+.style-card {
+    text-align:center;
+    padding:15px;
+    border-radius:15px;
+    cursor:pointer;
+    transition:0.3s all;
+    border:2px solid transparent;
+    background: rgba(255,255,255,0.05);
+    box-shadow:0 0 15px rgba(0,255,213,0.2);
+}
+.style-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(0,255,213,0.6);
+}
+.style-card.selected {
+    border:3px solid #ffbf00;
+    box-shadow: 0 0 25px #ffbf00;
+}
+.style-card img {
+    width:100%;
+    border-radius:12px;
+}
+.style-card h3 {
+    margin-top:10px;
+    color:#ffdd57;
+    font-size:1.1rem;
+    text-shadow:0 0 10px #ffdd57;
+}
+
+/* ===== Generate Button ===== */
+.generate-btn {
+    margin-top:35px;
+    padding:15px 35px;
+    font-size:17px;
+    cursor:pointer;
+    background: linear-gradient(45deg, #00ffd5, #00aaff);
+    border:none;
+    border-radius:12px;
+    color:#000;
+    font-weight:bold;
+    box-shadow: 0 0 15px #00ffd5, 0 0 25px #00aaff;
+    transition:0.3s all;
+}
+.generate-btn:hover {
+    transform:scale(1.05);
+    box-shadow: 0 0 25px #00ffd5,0 0 45px #00aaff;
+}
+
+/* ===== Glowing info panel ===== */
+.info-panel {
+    margin-bottom:30px;
+    padding:15px 20px;
+    border-radius:15px;
+    background: rgba(255,255,255,0.05);
+    border:1px solid rgba(0,255,213,0.3);
+    box-shadow:0 0 15px rgba(0,255,213,0.3);
+    animation: pulse 3s infinite alternate;
+}
+@keyframes pulse {
+    0% { box-shadow:0 0 15px rgba(0,255,213,0.3);}
+    100% { box-shadow:0 0 35px rgba(0,255,213,0.6);}
+}
+.info-panel h3 {
+    color:#00ffd5;
+    margin-bottom:8px;
+}
+.info-panel p {
+    font-size:0.95rem;
+    color:#fff;
+}
+
+/* ===== Music / Audio input ===== */
+.audio-input {
+    margin-top:20px;
+    display:flex; flex-direction:column;
+}
+.audio-input input {
+    padding:10px 15px;
+    border-radius:12px;
+    border:none;
+    outline:none;
+    background: rgba(255,255,255,0.05);
+    color:#fff;
+    font-size:14px;
+    box-shadow:0 0 10px rgba(0,255,213,0.2);
+    transition:0.3s;
+}
+.audio-input input:focus {
+    box-shadow:0 0 20px #00ffd5;
+}
+
+</style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Select Your AI Video Style 🎬</h1>
-    <p class="subtitle">Choose the cinematic magic you want AI to generate</p>
+    <h1 class="title">🎬 Select AI Video Style</h1>
+    <p class="subtitle">Professional video styling with glowing effects</p>
 
+    <!-- Video Info Panel -->
+    <div class="info-panel" id="videoInfoPanel">
+        <h3>Video Details Collected</h3>
+        <p id="videoInfoText">Loading your video info...</p>
+    </div>
+
+    <!-- Optional Music Input -->
+    <div class="audio-input">
+        <label for="audioLink" style="color:#ffdd57; margin-bottom:5px;">Background Music / Audio (Optional)</label>
+        <input type="text" id="audioLink" placeholder="Paste audio link or leave blank">
+    </div>
+
+    <!-- Video Styles Grid -->
     <div class="style-grid">
-
         <div class="style-card" data-style="Cinematic Movie Trailer">
             <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" alt="">
             <h3>Cinematic Movie Trailer</h3>
         </div>
-
         <div class="style-card" data-style="Luxury Brand Promo">
             <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7" alt="">
             <h3>Luxury Brand Promo</h3>
         </div>
-
         <div class="style-card" data-style="Futuristic AI Tech">
             <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7" alt="">
             <h3>Futuristic AI Tech</h3>
         </div>
-
         <div class="style-card" data-style="Emotional Story Reel">
             <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728" alt="">
             <h3>Emotional Story Reel</h3>
         </div>
-
         <div class="style-card" data-style="Instagram Viral Reel">
             <img src="https://images.unsplash.com/photo-1517602302552-471fe67acf66" alt="">
             <h3>Instagram Viral Reel</h3>
         </div>
-
         <div class="style-card" data-style="Corporate Presentation">
             <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7" alt="">
             <h3>Corporate Presentation</h3>
         </div>
-
     </div>
 
-    <div class="generate-section">
-        <button class="generate-btn" id="generateBtn">Generate AI Video 🚀</button>
-    </div>
+    <!-- Generate Button -->
+    <button class="generate-btn" id="generateBtn">Generate AI Video 🚀</button>
 </div>
 
 <script>
-    // Load video info from previous page
-    const videoData = JSON.parse(localStorage.getItem("videoData")) || {};
+// Load video info from previous page
+const videoData = JSON.parse(localStorage.getItem("videoData")) || {};
 
-    let selectedStyle = null;
+// Display video info
+const videoInfoText = document.getElementById("videoInfoText");
+let infoHTML = `
+<strong>Business Name:</strong> ${videoData.businessName || '-'}<br>
+<strong>Video Title:</strong> ${videoData.videoTitle || '-'}<br>
+<strong>Description:</strong> ${videoData.videoDescription || '-'}<br>
+<strong>Duration:</strong> ${videoData.videoDuration ? videoData.videoDuration + ' seconds' : '-'}<br>
+<strong>Uploaded Files:</strong> ${videoData.videoFiles && videoData.videoFiles.length > 0 ? videoData.videoFiles.join(', ') : 'None'}
+`;
+videoInfoText.innerHTML = infoHTML;
 
-    // Style card selection
-    const styleCards = document.querySelectorAll(".style-card");
-    styleCards.forEach(card => {
-        card.addEventListener("click", () => {
-            // Remove selection from all
-            styleCards.forEach(c => c.classList.remove("selected"));
-            // Select current
-            card.classList.add("selected");
-            selectedStyle = card.getAttribute("data-style");
-        });
+// Style selection
+let selectedStyle = null;
+document.querySelectorAll(".style-card").forEach(card => {
+    card.addEventListener("click", () => {
+        document.querySelectorAll(".style-card").forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+        selectedStyle = card.getAttribute("data-style");
     });
+});
 
-    // Generate video button
-    document.getElementById("generateBtn").addEventListener("click", () => {
-        if(!selectedStyle){
-            alert("Please select a video style first!");
-            return;
-        }
-
-        // Add selected style to videoData
-        videoData.selectedStyle = selectedStyle;
-
-        // Save to localStorage
-        localStorage.setItem("videoData", JSON.stringify(videoData));
-
-        // Redirect to result page
-        window.location.href = "result1.html";
-    });
+// Generate video
+document.getElementById("generateBtn").addEventListener("click", () => {
+    if(!selectedStyle){
+        alert("Please select a video style first!");
+        return;
+    }
+    // Save selected style & audio link
+    videoData.selectedStyle = selectedStyle;
+    videoData.audioLink = document.getElementById("audioLink").value || '';
+    localStorage.setItem("videoData", JSON.stringify(videoData));
+    // Redirect to result page
+    window.location.href = "result1.html";
+});
 </script>
-
 </body>
 </html>
