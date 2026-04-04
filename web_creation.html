@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BusyAI Website Builder</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Poppins',sans-serif;
+    height:100vh;
+    background:#0d1117;
+    color:white;
+    overflow:hidden;
+}
+
+.container{display:flex;height:100%;}
+
+.left{
+    width:50%;
+    display:flex;
+    flex-direction:column;
+    background:#161b22;
+    border-right:1px solid #30363d;
+}
+
+.header{
+    padding:12px;
+    text-align:center;
+    background:#010409;
+}
+
+textarea{
+    flex:1;
+    background:#0d1117;
+    color:#58a6ff;
+    border:none;
+    outline:none;
+    padding:10px;
+    font-family:monospace;
+    border-bottom:1px solid #30363d;
+}
+
+.actions{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    padding:10px;
+}
+
+button{
+    padding:8px 14px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.run{background:#238636;color:white;}
+.download{background:#da8b0c;color:white;}
+
+.chat{
+    display:flex;
+    padding:10px;
+    gap:10px;
+}
+
+.chat input{
+    flex:1;
+    padding:10px;
+    border-radius:6px;
+    border:none;
+}
+
+.chat button{
+    background:#1f6feb;
+    color:white;
+}
+
+.right{
+    width:50%;
+    background:white;
+    position:relative;
+}
+
+iframe{
+    width:100%;
+    height:100%;
+    border:none;
+}
+
+.default{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    color:#888;
+}
+
+/* LOADER */
+.loader{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.circle{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:linear-gradient(45deg,cyan,magenta);
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    0%{transform:rotate(0);}
+    100%{transform:rotate(360deg);}
+}
+</style>
+</head>
+
+<body>
+
+<div id="loader" class="loader">
+    <div class="circle"></div>
+</div>
+
+<div class="container">
+
+<div class="left">
+<div class="header">💻 BusyAI Editor</div>
+
+<textarea id="htmlCode" placeholder="HTML"></textarea>
+<textarea id="cssCode" placeholder="CSS"></textarea>
+<textarea id="jsCode" placeholder="JavaScript"></textarea>
+
+<div class="actions">
+<button class="run" onclick="runPreview()">Run</button>
+<button class="download" onclick="downloadProject()">Download</button>
+</div>
+
+<div class="chat">
+<input id="prompt" placeholder="Describe website">
+<button onclick="generateWebsite()">Generate</button>
+</div>
+
+</div>
+
+<div class="right">
+<div id="defaultText" class="default">BusyAI</div>
+<iframe id="preview"></iframe>
+</div>
+
+</div>
+
+<script>
+
+function showLoader(show){
+    document.getElementById("loader").style.display = show ? "flex" : "none";
+}
+
+async function generateWebsite(){
+    const prompt=document.getElementById("prompt").value;
+
+    if(!prompt){alert("Enter prompt");return;}
+
+    showLoader(true);
+
+    try{
+        const res=await fetch("http://localhost:8000/generate-website",{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({prompt})
+        });
+
+        const data=await res.json();
+
+        console.log(data);
+
+        if(data.error){
+            alert(data.error);
+            showLoader(false);
+            return;
+        }
+
+        document.getElementById("htmlCode").value=data.html||"";
+        document.getElementById("cssCode").value=data.css||"";
+        document.getElementById("jsCode").value=data.js||"";
+
+        runPreview();
+
+    }catch(e){
+        alert("Server error");
+        console.error(e);
+    }
+
+    showLoader(false);
+}
+
+function runPreview(){
+    const html=document.getElementById("htmlCode").value;
+    const css=document.getElementById("cssCode").value;
+    const js=document.getElementById("jsCode").value;
+
+    document.getElementById("preview").srcdoc=
+        "<html><head><style>"+css+"</style></head><body>"+
+        html+
+        "<script>"+js+"<\/script></body></html>";
+
+    document.getElementById("defaultText").style.display="none";
+}
+
+async function downloadProject(){
+    const html=document.getElementById("htmlCode").value;
+    const css=document.getElementById("cssCode").value;
+    const js=document.getElementById("jsCode").value;
+
+    const res=await fetch("http://localhost:8000/download-project",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({html,css,js})
+    });
+
+    const blob=await res.blob();
+    const url=URL.createObjectURL(blob);
+
+    const a=document.createElement("a");
+    a.href=url;
+    a.download="project.zip";
+    a.click();
+}
+
+</script>
+
+</body>
+</html>

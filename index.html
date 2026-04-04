@@ -1,28 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Busy AI - Processing</title>
-    <link rel="stylesheet" href="loading.css">
+<meta charset="UTF-8">
+<title>Busy AI - Loading</title>
+
+<style>
+
+/* 🌌 Background */
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    overflow: hidden;
+
+    background: 
+        linear-gradient(rgba(5,10,20,0.85), rgba(5,10,20,0.85)),
+        url("desktop-bg.png");
+    background-size: cover;
+    background-position: center;
+}
+
+/* 📱 Mobile background */
+@media (max-width: 768px) {
+    body {
+        background: 
+            linear-gradient(rgba(5,10,20,0.85), rgba(5,10,20,0.85)),
+            url("mobile-bg.png");
+    }
+}
+
+/* ✨ Glass Container */
+.loading-container {
+    text-align: center;
+    padding: 40px;
+    border-radius: 25px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 0 40px rgba(0,255,255,0.3);
+    animation: fadeIn 1.5s ease;
+}
+
+/* 🔥 Logo Animation */
+.logo {
+    width: 120px;
+    margin-bottom: 20px;
+    animation: floatLogo 3s infinite ease-in-out, glow 2s infinite alternate;
+}
+
+/* ✨ Title */
+.title {
+    font-size: 30px;
+    font-weight: bold;
+    background: linear-gradient(90deg, #00f0ff, #ff00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeIn 2s ease;
+}
+
+/* Subtitle */
+.subtitle {
+    margin-top: 10px;
+    opacity: 0.8;
+    animation: fadeIn 3s ease;
+}
+
+/* 🤖 Loader */
+.ai-loader {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.ai-loader div {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: cyan;
+    animation: bounce 1s infinite alternate;
+}
+
+.ai-loader div:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.ai-loader div:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* 🦋 Floating butterflies */
+.butterfly {
+    position: absolute;
+    font-size: 20px;
+    animation: float 8s infinite linear;
+    opacity: 0.7;
+}
+
+.b1 { top: 10%; left: 10%; }
+.b2 { top: 20%; right: 15%; }
+.b3 { bottom: 20%; left: 20%; }
+.b4 { bottom: 10%; right: 10%; }
+.b5 { top: 50%; left: 50%; }
+
+/* ✨ Animations */
+
+@keyframes floatLogo {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes glow {
+    from { filter: drop-shadow(0 0 10px cyan); }
+    to { filter: drop-shadow(0 0 25px magenta); }
+}
+
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-18px); }
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-80px); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+</style>
 </head>
+
 <body>
 
-<!-- Butterflies -->
+<!-- 🦋 Butterflies -->
 <div class="butterfly b1">🦋</div>
 <div class="butterfly b2">🦋</div>
 <div class="butterfly b3">🦋</div>
 <div class="butterfly b4">🦋</div>
 <div class="butterfly b5">🦋</div>
 
+<!-- 🚀 Main Container -->
 <div class="loading-container">
 
     <!-- Logo -->
-    <img src="logo.jpeg" class="logo" alt="Busy AI Logo">
+    <img src="logo.png" class="logo" alt="Busy AI Logo">
 
-    <h1 class="title">Busy AI is Creating Magic...</h1>
-    <p class="subtitle">Generating your intelligent design</p>
+    <h1 class="title">Busy AI is Creating Magic ✨</h1>
+    <p class="subtitle">AI is crafting your experience...</p>
 
-    <!-- AI Loader Animation -->
+    <!-- Loader -->
     <div class="ai-loader">
         <div></div>
         <div></div>
@@ -31,11 +163,18 @@
 
 </div>
 
-</body>
 <script>
-        // Show index page for 3 seconds
-        setTimeout(function() {
-            window.location.href = "home.html";
-        }, 3000);
-    </script>
+// Smooth redirect
+setTimeout(() => {
+    document.body.style.opacity = "0";
+    document.body.style.transition = "1s";
+
+    setTimeout(() => {
+        window.location.href = "home.html";
+    }, 1000);
+
+}, 3000);
+</script>
+
+</body>
 </html>

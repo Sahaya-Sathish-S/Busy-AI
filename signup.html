@@ -1,91 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Signup - Busy AI</title>
-    <link rel="stylesheet" href="signup.css">
-</head>
-<body>
+<meta charset="UTF-8">
+<title>Signup - Busy AI</title>
 
-<div class="butterfly b1">🦋</div>
-<div class="butterfly b2">🦋</div>
-<div class="butterfly b3">🦋</div>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: url("bg.png") no-repeat center center/cover;
+    position: relative;
+}
+
+/* DARK OVERLAY */
+body::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 25, 0.65);
+    backdrop-filter: blur(6px);
+    z-index: 0;
+}
+
+/* MAIN CARD */
+.container {
+    position: relative;
+    z-index: 1;
+
+    width: 370px;
+    padding: 35px;
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+
+    box-shadow: 0 0 40px rgba(0,0,0,0.6);
+    text-align: center;
+    color: #fff;
+}
+
+/* TEXT */
+.title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-size: 14px;
+    margin-bottom: 25px;
+    color: rgba(255,255,255,0.75);
+}
+
+/* INPUTS */
+.input-group {
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+.input-group label {
+    font-size: 13px;
+    margin-bottom: 6px;
+    display: block;
+    color: rgba(255,255,255,0.85);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+
+    background: rgba(0,0,0,0.3);
+    color: white;
+
+    outline: none;
+    transition: 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #00c6ff;
+    box-shadow: 0 0 10px #00c6ff;
+}
+
+.input-group input::placeholder {
+    color: rgba(255,255,255,0.5);
+}
+
+/* BUTTON */
+.glow-btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 12px;
+    margin-top: 10px;
+
+    background: linear-gradient(135deg, #6a5cff, #00c6ff);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.glow-btn:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 0 20px #00c6ff;
+}
+
+/* LINK */
+.switch {
+    margin-top: 18px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+}
+
+.switch a {
+    color: #00c6ff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.switch a:hover {
+    text-decoration: underline;
+}
+</style>
+
+</head>
+
+<body>
 
 <div class="container">
 
     <h1 class="title">Create Account</h1>
-    <p class="subtitle">Sign up to start creating with Busy AI</p>
+    <p class="subtitle">Sign up to start using Busy AI</p>
 
-    <div class="auth-card">
-
-        <div class="input-group">
-            <label>Name</label>
-            <input type="text" id="name" placeholder="Enter your name">
-        </div>
-
-        <div class="input-group">
-            <label>Email</label>
-            <input type="email" id="email" placeholder="Enter your email">
-        </div>
-
-        <div class="input-group">
-            <label>Password</label>
-            <input type="password" id="password" placeholder="Create password">
-        </div>
-
-        <div class="input-group">
-            <label>Confirm Password</label>
-            <input type="password" id="confirmPassword" placeholder="Confirm password">
-        </div>
-
-        <button class="glow-btn" onclick="signup()">Sign Up</button>
-
-        <p class="switch">
-            Already have an account? 
-            <a href="login.html">Login</a>
-        </p>
-
+    <div class="input-group">
+        <label>Name</label>
+        <input type="text" id="name" placeholder="Enter your name">
     </div>
+
+    <div class="input-group">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="Enter your email">
+    </div>
+
+    <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Create password">
+    </div>
+
+    <div class="input-group">
+        <label>Confirm Password</label>
+        <input type="password" id="confirmPassword" placeholder="Confirm password">
+    </div>
+
+    <button class="glow-btn" onclick="signup()">Sign Up</button>
+
+    <p class="switch">
+        Already have an account? 
+        <a href="login.html">Login</a>
+    </p>
 
 </div>
 
 <script>
-function signup() {
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
+async function signup() {
+    try {
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
 
-    if (!name || !email || !password || !confirmPassword) {
-        alert("Please fill all fields");
-        return;
+        if (!name || !email || !password || !confirmPassword) {
+            alert("Please fill all fields");
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match");
+            return;
+        }
+
+        const res = await fetch("http://127.0.0.1:8000/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name, email, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            alert("Signup successful 🎉");
+            window.location.href = "login.html";
+        } else {
+            alert(data.error || "Signup failed");
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert("Server not connected ❌");
     }
-
-    if (password !== confirmPassword) {
-        alert("Passwords do not match");
-        return;
-    }
-
-    let users = JSON.parse(localStorage.getItem("busyai_users")) || [];
-
-    const emailExists = users.some(user => user.email === email);
-    if (emailExists) {
-        alert("Email already registered!");
-        return;
-    }
-
-    const newUser = {
-        name: name,
-        email: email,
-        password: password
-    };
-
-    users.push(newUser);
-
-    localStorage.setItem("busyai_users", JSON.stringify(users));
-
-    alert("Signup successful! 🎉");
-    window.location.href = "login.html";
 }
 </script>
 

@@ -1,69 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Login - Busy AI</title>
-    <link rel="stylesheet" href="login.css">
-</head>
-<body>
+<meta charset="UTF-8">
+<title>Login - Busy AI</title>
 
-<div class="butterfly b1">🦋</div>
-<div class="butterfly b2">🦋</div>
-<div class="butterfly b3">🦋</div>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: url("bg.png") no-repeat center center/cover;
+    position: relative;
+}
+
+/* DARK OVERLAY (VERY IMPORTANT FIX) */
+body::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 25, 0.65);
+    backdrop-filter: blur(6px);
+    z-index: 0;
+}
+
+/* MAIN CARD */
+.container {
+    position: relative;
+    z-index: 1;
+
+    width: 360px;
+    padding: 35px;
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+
+    box-shadow: 0 0 40px rgba(0,0,0,0.6);
+    text-align: center;
+    color: #fff;
+}
+
+/* TEXT */
+.title {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-size: 14px;
+    margin-bottom: 25px;
+    color: rgba(255,255,255,0.75);
+}
+
+/* INPUTS */
+.input-group {
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+.input-group label {
+    font-size: 13px;
+    margin-bottom: 6px;
+    display: block;
+    color: rgba(255,255,255,0.85);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+
+    background: rgba(0,0,0,0.3);
+    color: white;
+
+    outline: none;
+    transition: 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #00c6ff;
+    box-shadow: 0 0 10px #00c6ff;
+}
+
+.input-group input::placeholder {
+    color: rgba(255,255,255,0.5);
+}
+
+/* BUTTON */
+.glow-btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 12px;
+    margin-top: 10px;
+
+    background: linear-gradient(135deg, #6a5cff, #00c6ff);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.glow-btn:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 0 20px #00c6ff;
+}
+
+/* LINK */
+.switch {
+    margin-top: 18px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+}
+
+.switch a {
+    color: #00c6ff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.switch a:hover {
+    text-decoration: underline;
+}
+</style>
+
+</head>
+
+<body>
 
 <div class="container">
 
     <h1 class="title">Welcome Back</h1>
     <p class="subtitle">Login to continue using Busy AI</p>
 
-    <div class="auth-card">
-
-        <div class="input-group">
-            <label>Email</label>
-            <input type="email" id="email" placeholder="Enter your email">
-        </div>
-
-        <div class="input-group">
-            <label>Password</label>
-            <input type="password" id="password" placeholder="Enter your password">
-        </div>
-
-        <button class="glow-btn" onclick="login()">Login</button>
-
-        <p class="switch">
-            Don’t have an account? 
-            <a href="signup.html">Sign up</a>
-        </p>
-
+    <div class="input-group">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="Enter your email">
     </div>
+
+    <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Enter your password">
+    </div>
+
+    <button class="glow-btn" onclick="login()">Login</button>
+
+    <p class="switch">
+        Don’t have an account? 
+        <a href="signup.html">Sign up</a>
+    </p>
 
 </div>
 
 <script>
-function login() {
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
+async function login() {
+    try {
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
 
-    if (!email || !password) {
-        alert("Please enter email and password");
-        return;
-    }
+        if (!email || !password) {
+            alert("Enter email and password");
+            return;
+        }
 
-    let users = JSON.parse(localStorage.getItem("busyai_users")) || [];
+        const res = await fetch("http://127.0.0.1:8000/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email, password })
+        });
 
-    const validUser = users.find(user =>
-        user.email === email && user.password === password
-    );
+        const data = await res.json();
 
-    if (validUser) {
-        localStorage.setItem("busyai_user", JSON.stringify(validUser));
-        alert("Login successful 🚀");
-        window.location.href = "index.html";
-    } else {
-        alert("Invalid email or password ❌");
+        if (res.ok) {
+            alert("Login successful 🚀");
+            localStorage.setItem("user", JSON.stringify(data.user));
+            window.location.href = "index.html";
+        } else {
+            alert(data.error || "Login failed");
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert("Server not connected ❌");
     }
 }
 </script>
-
 </body>
 </html>
