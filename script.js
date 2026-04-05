@@ -77,7 +77,7 @@ async function sendMessage() {
     showTyping();
 
     try {
-        const response = await fetch("https://busy-ai-5wtw.onrender.com/chat", {
+        const response = await fetch("https://busy-ai-vkfw.onrender.com/chat", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
