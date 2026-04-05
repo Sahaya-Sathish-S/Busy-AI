@@ -87,7 +87,7 @@ def chat():
             headers={
                 "Authorization": f"Bearer {OPENROUTER_API_KEY}",
                 "Content-Type": "application/json",
-                "HTTP-Referer": "http://localhost:8000",
+                "HTTP-Referer": "https://busy-ai-vkfw.onrender.com",
                 "X-Title": "Busy AI"
             },
             json={
