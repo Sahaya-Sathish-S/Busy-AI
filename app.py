@@ -12,7 +12,7 @@ app = Flask(__name__, static_folder=".")
 CORS(app)  # ✅ Fix frontend connection
 
 # ================== KEYS ==================
-OPENROUTER_API_KEY=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
+OPENROUTER_API_KEY= "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"
 
 SUPABASE_URL = "https://abbcmzptqpvzuwmxybcs.supabase.co"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFiYmNtenB0cXB2enV3bXh5YmNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxMjg4OTcsImV4cCI6MjA5MDcwNDg5N30.8xXeKbBzEw4TT7WRREiI8XRlOtviIfPL3Tdr-R1QnQA"
