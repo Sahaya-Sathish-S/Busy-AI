@@ -13,6 +13,7 @@ CORS(app)  # ✅ Fix frontend connection
 
 # ================== KEYS ==================
 
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
 SUPABASE_URL = "https://abbcmzptqpvzuwmxybcs.supabase.co"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFiYmNtenB0cXB2enV3bXh5YmNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxMjg4OTcsImV4cCI6MjA5MDcwNDg5N30.8xXeKbBzEw4TT7WRREiI8XRlOtviIfPL3Tdr-R1QnQA"
